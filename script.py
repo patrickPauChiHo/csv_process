@@ -8,6 +8,17 @@ def read_csv(file_path):
         csv_reader = csv.DictReader(csv_file)
         records=[row for row in csv_reader]
     return records
+
+#function to convert to yaml_format
+def convert_to_yaml(records):
+    formatted_records = []
+    for record in records:
+        formatted_record = {
+            'name': f"{record['firstname']} {record['lastname']}",
+            'details': f"In division {record['division']} from {record['date']} performing {record['summary']}"
+        }
+        formatted_records.append(formatted_record)
+    return formatted_records
             
 
 
