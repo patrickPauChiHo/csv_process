@@ -13,8 +13,11 @@ def read_csv(file_path):
 
 def main():
     records = read_csv('input.csv')
+    #change the data type to integer for comparison
     sorted_records = sorted(records, key=lambda x: (int(x['division']), -int(x['points'])))
-    print(sorted_records)
+    #print(sorted_records)
+    top_three_records=sorted_records[:3]
+    print(top_three_records)
     
     
     
