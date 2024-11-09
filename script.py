@@ -20,29 +20,36 @@ def read_csv(file_path):
 #function to convert to yaml_format
 def convert_to_yaml(records):
     formatted_records = []
-    for record in records:
-        formatted_record = {
-            'name': f"{record['firstname']} {record['lastname']}",
-            'details': f"In division {record['division']} from {record['date']} performing {record['summary']}"
-        }
-        formatted_records.append(formatted_record)
-    return yaml.dump({'records': formatted_records}, default_flow_style=False)
+    #format reocrds handling
+    try:
+        for record in records:
+            formatted_record = {
+                'name': f"{record['firstname']} {record['lastname']}",
+                'details': f"In division {record['division']} from {record['date']} performing {record['summary']}"
+            }
+            formatted_records.append(formatted_record)
+        return yaml.dump({'records': formatted_records}, default_flow_style=False)
+    except KeyError as e:
+        return {'error': f"Missing key {e}, please check the column names in the csv file"}
+    
             
 
 
 def main():
     records = read_csv('input.csv')
-    #change the data type to integer for comparison
-    #sort the records by division and points
-    sorted_records = sorted(records, key=lambda x: (int(x['division']), -int(x['points'])))
     
-    #get the top three records
-    top_three_records=sorted_records[:3]
+    if records:
+        #change the data type to integer for comparison
+        #sort the records by division and points
+        sorted_records = sorted(records, key=lambda x: (int(x['division']), -int(x['points'])))
     
-    #convert the top three records to yaml format
-    yaml_records = convert_to_yaml(top_three_records)
+        #get the top three records
+        top_three_records=sorted_records[:3]
     
-    print (yaml_records)
+        #convert the top three records to yaml format
+        yaml_records = convert_to_yaml(top_three_records)
+    
+        print (yaml_records)
     
     
     
