@@ -3,7 +3,8 @@ import yaml
 
 #function to read csv file
 def read_csv(file_path):
-    with open(file_path, 'r') as csv_file:
+    #add encoding="utf-8-sig" to remove the BOM character
+    with open(file_path, 'r', encoding="utf-8-sig") as csv_file:
         #use the csv.DictReader to read the csv file to a dictionary
         csv_reader = csv.DictReader(csv_file)
         records=[row for row in csv_reader]
@@ -18,7 +19,7 @@ def convert_to_yaml(records):
             'details': f"In division {record['division']} from {record['date']} performing {record['summary']}"
         }
         formatted_records.append(formatted_record)
-    return formatted_records
+    return yaml.dump({'records': formatted_records}, default_flow_style=False)
             
 
 
@@ -28,7 +29,10 @@ def main():
     sorted_records = sorted(records, key=lambda x: (int(x['division']), -int(x['points'])))
     #print(sorted_records)
     top_three_records=sorted_records[:3]
-    print(top_three_records)
+    #print(top_three_records)
+    yaml_records = convert_to_yaml(top_three_records)
+    
+    print (yaml_records)
     
     
     
