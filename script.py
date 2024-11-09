@@ -26,10 +26,13 @@ def convert_to_yaml(records):
 def main():
     records = read_csv('input.csv')
     #change the data type to integer for comparison
+    #sort the records by division and points
     sorted_records = sorted(records, key=lambda x: (int(x['division']), -int(x['points'])))
-    #print(sorted_records)
+    
+    #get the top three records
     top_three_records=sorted_records[:3]
-    #print(top_three_records)
+    
+    #convert the top three records to yaml format
     yaml_records = convert_to_yaml(top_three_records)
     
     print (yaml_records)
