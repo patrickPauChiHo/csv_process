@@ -3,12 +3,19 @@ import yaml
 
 #function to read csv file
 def read_csv(file_path):
+    try:
     #add encoding="utf-8-sig" to remove the BOM character
-    with open(file_path, 'r', encoding="utf-8-sig") as csv_file:
-        #use the csv.DictReader to read the csv file to a dictionary
-        csv_reader = csv.DictReader(csv_file)
-        records=[row for row in csv_reader]
-    return records
+        with open(file_path, 'r', encoding="utf-8-sig") as csv_file:
+            #use the csv.DictReader to read the csv file to a dictionary
+            csv_reader = csv.DictReader(csv_file)
+            records=[row for row in csv_reader]
+        return records
+    #catch the FileNotFoundError exception
+    except FileNotFoundError:
+        print("File not found")
+    #catch any other exception
+    except Exception as e:
+        print(e)
 
 #function to convert to yaml_format
 def convert_to_yaml(records):
