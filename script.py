@@ -25,7 +25,7 @@ def convert_to_yaml(records):
         for record in records:
             formatted_record = {
                 'name': f"{record['firstname']} {record['lastname']}",
-                'details': f"In division {record['division']} from {record['date']} performing {record['summary']}"
+                'details': f"In division {record['division']} from {record['date']} performing {record['summary']}"               
             }
             formatted_records.append(formatted_record)
         return yaml.dump({'records': formatted_records}, default_flow_style=False)
